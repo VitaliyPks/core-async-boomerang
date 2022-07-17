@@ -1,6 +1,4 @@
-
-const Boomerang = require("./Boomerang");
-
+const { checkUserName, addUser, updateUserScore } = require("../index");
 const Boomerang = require("./Boomerang");
 
 class Hero {
@@ -9,6 +7,7 @@ class Hero {
     this.position = position;
     this.boomerang = boomerang;
   }
+  updateUserScore;
 
   moveLeft() {
     // Идём влево.
@@ -26,9 +25,14 @@ class Hero {
     this.boomerang.fly();
   }
 
-  die(name, score) {
+  async die(name, score) {
     this.skin = "💀";
-    console.log(YOU ARE DEAD!💀 ${name} KILLED ${score} ENEMIES!!);
+    if (await checkUserName(name)) {
+      await updateUserScore(score, name);
+    } else {
+      await addUser(name, score);
+    }
+    console.log(`YOU ARE DEAD!💀 ${name} KILLED ${score} ENEMIES!!`);
     process.exit();
   }
 }
