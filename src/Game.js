@@ -23,13 +23,12 @@ class Game {
     this.hero = new Hero(new Boomerang(), 0); // Герою можно аргументом передать бумеранг.
     this.enemy = new Enemy();
     this.view = new View();
-
     this.track = [];
+    this.time = 300;
     this.score = 0;
+    this.speedEnemy = 0;
     this.regenerateTrack();
   }
-
-  checkUserName() {}
 
   regenerateTrack() {
     // Сборка всего необходимого (герой, враг(и), оружие)
@@ -50,9 +49,10 @@ class Game {
       this.enemy.skin = "💥";
     if (
       this.enemy.position === this.hero.boomerang.position ||
-      this.hero.boomerang.position + 1 === this.enemy.position
+      this.hero.boomerang.position > this.enemy.position
     ) {
       this.enemy.die();
+      this.dieEnemy = true;
       this.hero.boomerang.course = false;
       this.score += 1;
       this.enemy.generateSkin();
@@ -66,19 +66,29 @@ class Game {
     });
   }
 
+  async moveEnemy() {
+    this.speedEnemy = setInterval(() => {
+      this.enemy.moveLeft();
+    }, this.time);
+  }
+
   async play() {
     this.name = await this.registr();
     runInteractiveConsole(this.hero);
-    setInterval(() => {
-      this.enemy.moveLeft();
-    }, 300);
+    this.moveEnemy();
     const interval = setInterval(() => {
       // Let's play!
       this.check();
+      if (this.dieEnemy) {
+        clearInterval(this.speedEnemy);
+        if (this.time > 50) this.time -= 20;
+        this.dieEnemy = false;
+        this.moveEnemy();
+      }
       if (this.die) clearInterval(interval);
       this.regenerateTrack();
       this.view.render(this.track, this.score, this.name);
-    }, 100);
+    }, 42);
   }
 }
 module.exports = Game;
