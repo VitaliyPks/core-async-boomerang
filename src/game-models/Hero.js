@@ -17,7 +17,7 @@ class Hero {
 
   moveRight() {
     // Идём вправо.
-    this.position += 1;
+    if(this.position < 30)this.position += 1;
   }
 
   attack() {
