@@ -41,4 +41,16 @@ async function updateUserScore(score, name) {
   }
 }
 
-module.exports = { checkUserName, addUser, updateUserScore };
+async function getScores(name) {
+  try {
+    const [result] = await sequelize.query(
+      `SELECT score FROM "Boomerang" WHERE name = ?`,
+      { replacements: [name] }
+    );
+    return result[0].score;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+module.exports = { checkUserName, addUser, updateUserScore, getScores };

@@ -1,4 +1,9 @@
-const { checkUserName, addUser, updateUserScore } = require("../index");
+const {
+  checkUserName,
+  addUser,
+  updateUserScore,
+  getScores,
+} = require("../index");
 const Boomerang = require("./Boomerang");
 
 class Hero {
@@ -28,7 +33,7 @@ class Hero {
   async die(name, score) {
     this.skin = "💀";
     if (await checkUserName(name)) {
-      await updateUserScore(score, name);
+      if (score > (await getScores(name))) await updateUserScore(score, name);
     } else {
       await addUser(name, score);
     }
