@@ -28,6 +28,7 @@ class Game {
     this.hero = new Hero(new Boomerang(), 0); // Герою можно аргументом передать бумеранг.
     this.enemy = new Enemy();
     this.view = new View();
+
     this.track = [];
     this.score = 0;
     this.regenerateTrack();
@@ -39,8 +40,8 @@ class Game {
     // Сборка всего необходимого (герой, враг(и), оружие)
     // в единую структуру данных
     this.track = new Array(this.trackLength).fill(" ");
-    this.track[this.hero.position] = this.hero.skin;
     this.track[this.enemy.position] = this.enemy.skin;
+    this.track[this.hero.position] = this.hero.skin;
     if (this.hero.position < this.hero.boomerang.position)
       this.track[this.hero.boomerang.position] = this.hero.boomerang.skin;
   }

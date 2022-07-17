@@ -13,7 +13,6 @@ class Hero {
     this.position = position;
     this.boomerang = boomerang;
   }
-  updateUserScore;
 
   moveLeft() {
     // Идём влево.
