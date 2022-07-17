@@ -3,6 +3,7 @@ const {
   addUser,
   updateUserScore,
   getScores,
+  getTop5,
 } = require("../index");
 const Boomerang = require("./Boomerang");
 
@@ -37,7 +38,9 @@ class Hero {
     } else {
       await addUser(name, score);
     }
-    console.log(`YOU ARE DEAD!💀 ${name} KILLED ${score} ENEMIES!!`);
+    console.log(`\nWASTED!!!💀 ${name} KILLED ${score} ENEMIES!!\n`);
+    console.log('Топ 5 игроков:\n');
+    console.log(await getTop5());
     process.exit();
   }
 }

@@ -53,4 +53,24 @@ async function getScores(name) {
   }
 }
 
-module.exports = { checkUserName, addUser, updateUserScore, getScores };
+async function getTop5() {
+  try {
+    const [result] = await sequelize.query(
+      `SELECT name,score FROM "Boomerang" ORDER BY score DESC LIMIT 5`
+    );
+    return result.reduce((acc, el, i) => {
+      return acc + `${i + 1}.${el.name} рекорд ${el.score}\n`;
+    }, ``);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+// }  (el, index) => ``)
+
+module.exports = {
+  checkUserName,
+  addUser,
+  updateUserScore,
+  getScores,
+  getTop5,
+};
