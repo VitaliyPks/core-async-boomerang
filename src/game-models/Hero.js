@@ -9,7 +9,7 @@ const Boomerang = require("./Boomerang");
 
 class Hero {
   constructor(boomerang, position) {
-    this.skin = "🧙‍♂️"; // можете использовать любые emoji '💃'
+    this.skin = "👴"; // можете использовать любые emoji '💃'
     this.position = position;
     this.boomerang = boomerang;
   }
@@ -21,7 +21,7 @@ class Hero {
 
   moveRight() {
     // Идём вправо.
-    if(this.position < 30)this.position += 1;
+    if (this.position < 30) this.position += 1;
   }
 
   attack() {
@@ -38,7 +38,7 @@ class Hero {
       await addUser(name, score);
     }
     console.log(`\nWASTED!!!💀 ${name} KILLED ${score} ENEMIES!!\n`);
-    console.log('Топ 5 игроков:\n');
+    console.log("Топ 5 игроков:\n");
     console.log(await getTop5());
     process.exit();
   }
