@@ -8,9 +8,9 @@ class View {
     console.clear();
     console.log(arrTrack.join(""));
     console.log("\n");
-    console.log(You killed ${score} enemies!);
+    console.log(`You killed ${score} enemies!`);
     console.log("\n\n");
-    console.log(Created by "${yourTeamName}" with love);
+    console.log(`Created by ${yourTeamName} with love`);
   }
 }
 
