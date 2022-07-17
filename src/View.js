@@ -1,4 +1,5 @@
 class View {
+
   render(arrTrack, score, name) {
     const yourTeamName = "Elbrus";
 
