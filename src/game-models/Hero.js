@@ -1,4 +1,5 @@
-// Наш герой.
+
+const Boomerang = require("./Boomerang");
 
 const Boomerang = require("./Boomerang");
 
@@ -25,9 +26,9 @@ class Hero {
     this.boomerang.fly();
   }
 
-  die() {
+  die(name, score) {
     this.skin = "💀";
-    console.log("YOU ARE DEAD!💀");
+    console.log(YOU ARE DEAD!💀 ${name} KILLED ${score} ENEMIES!!);
     process.exit();
   }
 }
