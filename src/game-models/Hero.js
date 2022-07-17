@@ -1,11 +1,15 @@
-
-const Boomerang = require("./Boomerang");
-
+const {
+  checkUserName,
+  addUser,
+  updateUserScore,
+  getScores,
+  getTop5,
+} = require("../index");
 const Boomerang = require("./Boomerang");
 
 class Hero {
   constructor(boomerang, position) {
-    this.skin = "🤠"; // можете использовать любые emoji '💃'
+    this.skin = "🧙‍♂️"; // можете использовать любые emoji '💃'
     this.position = position;
     this.boomerang = boomerang;
   }
@@ -26,9 +30,16 @@ class Hero {
     this.boomerang.fly();
   }
 
-  die(name, score) {
+  async die(name, score) {
     this.skin = "💀";
-    console.log(YOU ARE DEAD!💀 ${name} KILLED ${score} ENEMIES!!);
+    if (await checkUserName(name)) {
+      if (score > (await getScores(name))) await updateUserScore(score, name);
+    } else {
+      await addUser(name, score);
+    }
+    console.log(`\nWASTED!!!💀 ${name} KILLED ${score} ENEMIES!!\n`);
+    console.log('Топ 5 игроков:\n');
+    console.log(await getTop5());
     process.exit();
   }
 }

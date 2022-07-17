@@ -11,6 +11,7 @@ const { Sequelize } = require("sequelize");
 const sequelize = new Sequelize("boomerang", "Vitaliy", "1123", {
   host: "localhost",
   dialect: "postgres",
+});
 const readline = require("readline");
 
 const rl = readline.createInterface({
@@ -27,30 +28,31 @@ class Game {
     this.hero = new Hero(new Boomerang(), 0); // Герою можно аргументом передать бумеранг.
     this.enemy = new Enemy();
     this.view = new View();
-    // this.boomerang = new Boomerang();
+
     this.track = [];
     this.score = 0;
     this.regenerateTrack();
   }
 
-  checkUserName(){
-    
-  }
+  checkUserName() {}
 
   regenerateTrack() {
     // Сборка всего необходимого (герой, враг(и), оружие)
     // в единую структуру данных
     this.track = new Array(this.trackLength).fill(" ");
-    this.track[this.hero.position] = this.hero.skin;
     this.track[this.enemy.position] = this.enemy.skin;
+    this.track[this.hero.position] = this.hero.skin;
     if (this.hero.position < this.hero.boomerang.position)
       this.track[this.hero.boomerang.position] = this.hero.boomerang.skin;
   }
 
   check() {
     if (this.hero.position === this.enemy.position) {
+      this.die = true;
       this.hero.die(this.name, this.score);
     }
+    if (this.hero.boomerang.position - 2 === this.enemy.position - 4)
+      this.enemy.skin = "💥";
     if (
       this.enemy.position === this.hero.boomerang.position ||
       this.hero.boomerang.position + 1 === this.enemy.position
@@ -64,7 +66,7 @@ class Game {
   }
 
   registr() {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       rl.question("Введите имя:", (answer) => res(answer));
     });
   }
@@ -75,13 +77,13 @@ class Game {
     setInterval(() => {
       this.enemy.moveLeft();
     }, 300);
-    setInterval(() => {
+    const interval = setInterval(() => {
       // Let's play!
       this.check();
+      if (this.die) clearInterval(interval);
       this.regenerateTrack();
       this.view.render(this.track, this.score, this.name);
-    }, 42);
+    }, 100);
   }
 }
-
 module.exports = Game;
