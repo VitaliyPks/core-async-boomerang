@@ -7,6 +7,12 @@ const Hero = require("./game-models/Hero");
 const Enemy = require("./game-models/Enemy");
 const View = require("./View");
 const Boomerang = require("./game-models/Boomerang");
+const readline = require("readline");
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
 // Основной класс игры.
 // Тут будут все настройки, проверки, запуск.
@@ -35,7 +41,7 @@ class Game {
 
   check() {
     if (this.hero.position === this.enemy.position) {
-      this.hero.die();
+      this.hero.die(this.name, this.score);
     }
     if (
       this.enemy.position === this.hero.boomerang.position ||
@@ -49,7 +55,14 @@ class Game {
     }
   }
 
-  play() {
+  registr() {
+    return new Promise((res, rej) => {
+      rl.question("Введите имя:", (answer) => res(answer));
+    });
+  }
+
+  async play() {
+    this.name = await this.registr();
     runInteractiveConsole(this.hero);
     setInterval(() => {
       this.enemy.moveLeft();
@@ -58,7 +71,7 @@ class Game {
       // Let's play!
       this.check();
       this.regenerateTrack();
-      this.view.render(this.track, this.score);
+      this.view.render(this.track, this.score, this.name);
     }, 42);
   }
 }
