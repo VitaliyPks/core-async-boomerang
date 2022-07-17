@@ -7,6 +7,12 @@ const Hero = require("./game-models/Hero");
 const Enemy = require("./game-models/Enemy");
 const View = require("./View");
 const Boomerang = require("./game-models/Boomerang");
+const { Sequelize } = require("sequelize");
+
+const sequelize = new Sequelize("boomerang", "Vitaliy", "1123", {
+  host: "localhost",
+  dialect: "postgres",
+});
 
 // Основной класс игры.
 // Тут будут все настройки, проверки, запуск.
@@ -23,6 +29,10 @@ class Game {
     this.regenerateTrack();
   }
 
+  checkUserName(){
+    
+  }
+
   regenerateTrack() {
     // Сборка всего необходимого (герой, враг(и), оружие)
     // в единую структуру данных
@@ -35,7 +45,6 @@ class Game {
 
   check() {
     if (this.hero.position === this.enemy.position) {
-      
       this.hero.die();
     }
     if (
