@@ -7,6 +7,10 @@ const Hero = require("./game-models/Hero");
 const Enemy = require("./game-models/Enemy");
 const View = require("./View");
 const Boomerang = require("./game-models/Boomerang");
+const { Sequelize } = require("sequelize");
+const sequelize = new Sequelize("boomerang", "Vitaliy", "1123", {
+  host: "localhost",
+  dialect: "postgres",
 const readline = require("readline");
 
 const rl = readline.createInterface({
@@ -27,6 +31,10 @@ class Game {
     this.track = [];
     this.score = 0;
     this.regenerateTrack();
+  }
+
+  checkUserName(){
+    
   }
 
   regenerateTrack() {
