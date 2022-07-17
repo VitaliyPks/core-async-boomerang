@@ -41,7 +41,10 @@ class Game {
   }
 
   check() {
-    if (this.hero.position === this.enemy.position) {
+    if (
+      this.hero.position === this.enemy.position ||
+      this.hero.position > this.enemy.position
+    ) {
       this.die = true;
       this.hero.die(this.name, this.score);
     }
