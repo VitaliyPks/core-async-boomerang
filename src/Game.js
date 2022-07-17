@@ -51,6 +51,8 @@ class Game {
       this.die = true;
       this.hero.die(this.name, this.score);
     }
+    if (this.hero.boomerang.position - 2 === this.enemy.position - 4)
+      this.enemy.skin = "💥";
     if (
       this.enemy.position === this.hero.boomerang.position ||
       this.hero.boomerang.position + 1 === this.enemy.position
@@ -81,7 +83,7 @@ class Game {
       if (this.die) clearInterval(interval);
       this.regenerateTrack();
       this.view.render(this.track, this.score, this.name);
-    }, 42);
+    }, 100);
   }
 }
 module.exports = Game;
