@@ -90,7 +90,7 @@ class Game {
       }
       if (this.die) clearInterval(interval);
       this.regenerateTrack();
-      this.view.render(this.track, this.score, this.name);
+      this.view.render(this.track, this.score, this.name, this.trackLength);
     }, 42);
   }
 }
